@@ -1,0 +1,22 @@
+##Swagger-ui custom path
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    try-it-out-enabled: true
+    filter: true
+
+##Custom documentation Swagger-UI
+open:
+  api:
+    title: Open API Vinfast Car Shop App (E-commerce)
+    version: v1.0.0
+    description: Open Api Service documentation for Shop App
+    serverUrl: http://localhost:8081/
+    serverName: Local Environment
+
+jwt:
+  expiration: 3600000 # 1 hour = 1000 * 60 * 60
+  expiration-refresh-token: 1209600000 #  2 weeks = 1000 * 60 * 60 * 24 * 14
+  secretKey: SgXGUAKVe2fuwPdp2d3P4V0HEJwHNAYphDFK1ugaGmnH9ubgoASVX1AEd2hjYFcQm4j/dvvKLgi64VNOsPHdUw==
+  refreshKey: Ev/Kv5b1ndvM7ixJ/qIGCB4cnB0sKgY8ys1lIbFDteM7lfGo2x7Zwr4xNyCtbglUzKBa4jL7VbONrcfkYIDUpA==
+
