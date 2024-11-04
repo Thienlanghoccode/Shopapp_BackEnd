@@ -1,6 +1,6 @@
 package com.java.PTPMHDV13.Vinfast_Sales.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,8 +28,11 @@ public class Product {
     @Column(name = "image")
     private String productImage;
 
+    @Column(name = "instock")
+    private int inStock;
+
     @ManyToOne
     @JoinColumn(name = "cate_id")
-    @JsonBackReference
+    @JsonManagedReference
     private Category category;
 }

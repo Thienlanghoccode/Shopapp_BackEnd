@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.toUser(dto);
         if(checkForDuplicate(user))
             throw new AlReadyExistException("User Already Exists");
-        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         userRepository.save(user);
     }
 

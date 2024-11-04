@@ -36,6 +36,11 @@ public class CategoryServiceImpl implements CategoryService {
             throw new AlReadyExistException("Category already exists");
         Category category = new Category();
         category.setCateName(categoryDTO.getCategoryName());
+        if(categoryRepository.findById(categoryDTO.getParentId()).isEmpty()){
+            category.setParentCategory(null);
+        } else {
+            category.setParentCategory(categoryRepository.findById(categoryDTO.getParentId()).get());
+        }
         categoryRepository.save(category);
     }
 

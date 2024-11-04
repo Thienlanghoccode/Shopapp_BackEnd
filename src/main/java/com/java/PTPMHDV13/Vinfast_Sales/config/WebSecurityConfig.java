@@ -40,7 +40,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(manager -> manager
                         .sessionCreationPolicy(STATELESS))

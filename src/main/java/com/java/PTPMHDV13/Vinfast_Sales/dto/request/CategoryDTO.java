@@ -8,4 +8,6 @@ public class CategoryDTO {
 
     @NotEmpty(message = "Category name must not be null")
     private String categoryName;
+
+    private int parentId;
 }
