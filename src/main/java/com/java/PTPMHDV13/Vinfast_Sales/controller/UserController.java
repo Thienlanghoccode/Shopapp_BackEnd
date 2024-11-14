@@ -46,7 +46,7 @@ public class UserController {
 
     @Operation(summary = "Update user", description = "API update user by id")
     @PutMapping("/{userId}")
-    public ResponseData<?> updateUser(@PathVariable Long userId, @RequestBody UserRequestDTO request) {
+    public ResponseData<?> updateUser(@PathVariable Long userId,@Valid @RequestBody UserRequestDTO request) {
         userService.updateUser(request, userId);
         return new ResponseData<>(HttpStatus.ACCEPTED.value(),
                 "Request update user, userId = " + userId);

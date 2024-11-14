@@ -2,6 +2,7 @@ package com.java.PTPMHDV13.Vinfast_Sales.service.impl;
 
 import com.java.PTPMHDV13.Vinfast_Sales.dto.request.UserRequestDTO;
 import com.java.PTPMHDV13.Vinfast_Sales.entity.User;
+import com.java.PTPMHDV13.Vinfast_Sales.enums.UserStatus;
 import com.java.PTPMHDV13.Vinfast_Sales.exception.AlReadyExistException;
 import com.java.PTPMHDV13.Vinfast_Sales.mapper.UserMapper;
 import com.java.PTPMHDV13.Vinfast_Sales.repository.UserRepository;
@@ -46,10 +47,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void saveUser(UserRequestDTO dto) {
-        User user = userMapper.toUserRegister(dto);
+        User user = userMapper.toUser(dto);
         if(checkForDuplicate(user))
             throw new AlReadyExistException("User Already Exists");
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setStatus(UserStatus.ACTIVE);
+        user.setIsAdmin(dto.getIsAdmin() != null);
         userRepository.save(user);
     }
 
