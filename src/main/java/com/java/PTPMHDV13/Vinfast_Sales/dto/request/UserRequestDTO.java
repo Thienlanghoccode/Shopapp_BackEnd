@@ -1,6 +1,7 @@
 package com.java.PTPMHDV13.Vinfast_Sales.dto.request;
 
 
+import com.java.PTPMHDV13.Vinfast_Sales.enums.UserStatus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,4 +23,8 @@ public class UserRequestDTO implements Serializable {
 
     @NotNull(message = "Password must not be null")
     private String password;
+
+    private Boolean isAdmin;
+
+    private UserStatus status;
 }

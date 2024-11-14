@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void saveUser(UserRequestDTO dto) {
-        User user = userMapper.toUser(dto);
+        User user = userMapper.toUserRegister(dto);
         if(checkForDuplicate(user))
             throw new AlReadyExistException("User Already Exists");
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
@@ -55,8 +55,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public Boolean updateUser(User user) {
-        return null;
+    public void updateUser(UserRequestDTO request, Long id) {
+        User user = findById(id);
+        user.setEmail(request.getEmail());
+        user.setUsername(request.getUsername());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setStatus(request.getStatus());
+        user.setIsAdmin(request.getIsAdmin());
+        userRepository.save(user);
     }
 
     @Override

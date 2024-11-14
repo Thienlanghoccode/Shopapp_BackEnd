@@ -10,5 +10,6 @@ public interface UserMapper {
 
     @Mapping(target = "isAdmin", constant = "false")
     @Mapping(target = "status", constant = "ACTIVE")
-    User toUser(UserRequestDTO userRequestDTO);
+    User toUserRegister(UserRequestDTO userRequestDTO);
+
 }

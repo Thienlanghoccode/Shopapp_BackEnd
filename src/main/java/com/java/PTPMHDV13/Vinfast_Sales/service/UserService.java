@@ -16,7 +16,7 @@ public interface UserService {
 
     void saveUser(UserRequestDTO userRequestDTO);
 
-    Boolean updateUser(User user);
+    void updateUser(UserRequestDTO request, Long id);
 
     void deleteUser(Long id);
 

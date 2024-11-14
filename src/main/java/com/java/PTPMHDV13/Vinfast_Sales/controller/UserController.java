@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,9 +44,10 @@ public class UserController {
                 "User added successfully" , 1);
     }
 
-    @Operation(summary = "Change user status", description = "API change user's status")
+    @Operation(summary = "Update user", description = "API update user by id")
     @PutMapping("/{userId}")
-    public ResponseData<?> updateUser(@PathVariable Long userId, @RequestBody UserRequestDTO user) {
+    public ResponseData<?> updateUser(@PathVariable Long userId, @RequestBody UserRequestDTO request) {
+        userService.updateUser(request, userId);
         return new ResponseData<>(HttpStatus.ACCEPTED.value(),
                 "Request update user, userId = " + userId);
     }
