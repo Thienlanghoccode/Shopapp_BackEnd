@@ -51,7 +51,11 @@ public class UserServiceImpl implements UserService {
         if(checkForDuplicate(user))
             throw new AlReadyExistException("User Already Exists");
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        user.setStatus(UserStatus.ACTIVE);
+        if (dto.getStatus() == null) {
+            user.setStatus(UserStatus.ACTIVE);
+        } else {
+            user.setStatus(dto.getStatus());
+        }
         user.setIsAdmin(dto.getIsAdmin() != null);
         userRepository.save(user);
     }
