@@ -43,11 +43,17 @@ public class CategoryController {
         return new ResponseData<>(HttpStatus.CREATED.value(),"Category added successfully",1);
     }
 
-    @Operation(summary = "Delete category", description = "API delete categoy by id")
+    @Operation(summary = "Update category", description = "API update category")
+    @PutMapping("/{id}")
+    public ResponseData<?> updateCategory(@PathVariable Long id ,@Valid @RequestBody CategoryDTO categoryDTO) {
+        categoryService.updateCategory(id,categoryDTO);
+        return new ResponseData<>(HttpStatus.OK.value(),"Category updated successfully",1);
+    }
+
+    @Operation(summary = "Delete category", description = "API delete category by id")
     @DeleteMapping("/{categoryId}")
     public ResponseData<?> deleteCategory(@PathVariable Long categoryId) {
         categoryService.deleteCategoryById(categoryId);
         return new ResponseData<>(HttpStatus.NO_CONTENT.value(),"Category deleted successfully");
     }
-
 }

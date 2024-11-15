@@ -47,8 +47,18 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public void deleteCategoryById(Long id) {
-        if(categoryRepository.findById(Math.toIntExact(id)).isEmpty())
-            throw new NoSuchElementException("Category not found");
-        else categoryRepository.deleteById(Math.toIntExact(id));
+        Category parentCategory  = getCategoryById(id);
+        List<Category> childCategories = categoryRepository.findByParentCategory(parentCategory);
+        childCategories.forEach(child -> child.setParentCategory(null));
+        categoryRepository.saveAll(childCategories);
+        categoryRepository.deleteById(Math.toIntExact(parentCategory.getId()));
+    }
+
+    @Override
+    @Transactional
+    public void updateCategory(Long id, CategoryDTO category) {
+        Category categoryToUpdate = getCategoryById(id);
+        categoryToUpdate.setCateName(category.getCategoryName());
+        categoryRepository.save(categoryToUpdate);
     }
 }
