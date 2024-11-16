@@ -51,4 +51,16 @@ public class ProductServiceImpl implements ProductService {
             throw new NoSuchElementException("Product not found");
         productRepository.deleteById(id);
     }
+
+    @Override
+    public void updateProduct(Integer productId, ProductDTO productDTO) {
+        Product product = getProductById(productId);
+        product.setProductName(productDTO.getProductName());
+        product.setProductDescription(productDTO.getProductDescription());
+        product.setProductPrice(productDTO.getProductPrice());
+        product.setProductImage(productDTO.getProductImage());
+        product.setInStock(productDTO.getInStock());
+        product.setCategory(categoryRepository.findById(productDTO.getCateID()).get());
+        productRepository.save(product);
+    }
 }

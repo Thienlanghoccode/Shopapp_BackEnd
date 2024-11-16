@@ -42,6 +42,13 @@ public class ProductController {
         return new ResponseData<>(HttpStatus.CREATED.value(),"Product was added successfully", 1);
     }
 
+    @Operation(summary = "Update product", description = "API update product")
+    @PutMapping("/{productId}")
+    public ResponseData<?> updateProduct(@PathVariable Integer productId, @RequestBody ProductDTO product) {
+        productService.updateProduct(productId, product);
+        return new ResponseData<>(HttpStatus.OK.value(),"Product was updated successfully", 1);
+    }
+
     @Operation(summary = "Delete product", description = "API delete product by id")
     @DeleteMapping("/{productId}")
     public ResponseData<?> deleteProduct(@PathVariable Integer productId) {
