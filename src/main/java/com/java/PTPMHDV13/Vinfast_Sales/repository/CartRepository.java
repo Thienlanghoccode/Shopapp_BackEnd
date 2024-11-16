@@ -28,4 +28,15 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
             "ORDER BY total_revenue DESC",
             nativeQuery = true)
     List<Object[]> getProductRevenue();
+
+    @Query(value = "SELECT TOP 5 " +
+            "p.id AS product_id, " +
+            "p.name AS product_name, " +
+            "SUM(ci.quantity) AS total_quantity, " +
+            "SUM(ci.quantity * p.price) AS total_revenue " +
+            "FROM cartitem ci " +
+            "JOIN product p ON ci.product_id = p.id " +
+            "GROUP BY p.id, p.name " +
+            "ORDER BY total_quantity DESC", nativeQuery = true)
+    List<Object[]> getTopSellingProducts();
 }

@@ -21,6 +21,7 @@ public class CartController {
 
     private final CartService cartService;
 
+    @Operation(summary = "Get all cart", description = "API get all cart")
     @GetMapping
     public List<Cart> getCarts() {
         return cartService.getAllCarts();
@@ -36,5 +37,11 @@ public class CartController {
     @GetMapping("/product-revenue")
     public ResponseData<?> getProductRevenue() {
         return new ResponseData<>(HttpStatus.OK.value(), "Request get product revenue", cartService.getAllProductRevenues());
+    }
+
+    @Operation(summary = "Get selling product", description = "API get top 5 best-selling product")
+    @GetMapping("/top-selling-product")
+    public ResponseData<?> getTop5BestSellingProduct() {
+        return new ResponseData<>(HttpStatus.OK.value(), "Request get top 5 best-selling product", cartService.getAllTopSellingProducts());
     }
 }

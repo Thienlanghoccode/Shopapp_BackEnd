@@ -2,8 +2,8 @@ package com.java.PTPMHDV13.Vinfast_Sales.service.impl;
 
 import com.java.PTPMHDV13.Vinfast_Sales.dto.response.ProductRevenueDTO;
 import com.java.PTPMHDV13.Vinfast_Sales.dto.response.RevenueDTO;
+import com.java.PTPMHDV13.Vinfast_Sales.dto.response.TopSellingProduct;
 import com.java.PTPMHDV13.Vinfast_Sales.entity.Cart;
-import com.java.PTPMHDV13.Vinfast_Sales.entity.Product;
 import com.java.PTPMHDV13.Vinfast_Sales.repository.CartRepository;
 import com.java.PTPMHDV13.Vinfast_Sales.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -76,6 +75,25 @@ public class CartServiceImpl implements CartService {
                     .build());
         }
         return productRevenueDTOList;
+    }
+
+    @Override
+    public List<TopSellingProduct> getAllTopSellingProducts() {
+        List<Object[]> results = cartRepository.getTopSellingProducts();
+        List<TopSellingProduct> topSellingProductList = new ArrayList<>();
+        for (Object[] row : results) {
+            Integer productId = (Integer) row[0];
+            String productName = (String) row[1];
+            Integer totalQuantity = (Integer) row[2];
+            BigDecimal totalRevenue = (BigDecimal) row[3];
+            topSellingProductList.add(TopSellingProduct.builder()
+                            .productId(productId)
+                            .productName(productName)
+                            .totalQuantity(totalQuantity)
+                            .totalRevenue(totalRevenue)
+                    .build());
+        }
+        return topSellingProductList;
     }
 
 }
