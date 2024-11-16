@@ -53,6 +53,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public void updateProduct(Integer productId, ProductDTO productDTO) {
         Product product = getProductById(productId);
         product.setProductName(productDTO.getProductName());
