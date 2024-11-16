@@ -3,6 +3,7 @@ package com.java.PTPMHDV13.Vinfast_Sales.controller;
 import com.java.PTPMHDV13.Vinfast_Sales.dto.response.ResponseData;
 import com.java.PTPMHDV13.Vinfast_Sales.entity.Cart;
 import com.java.PTPMHDV13.Vinfast_Sales.service.CartService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,8 +26,15 @@ public class CartController {
         return cartService.getAllCarts();
     }
 
+    @Operation(summary = "Get monthly revenue", description = "API get all monthly revenue")
     @GetMapping("/monthly-revenue")
     public ResponseData<?> getMonthlyRevenue() {
         return new ResponseData<>(HttpStatus.OK.value(), "Request get monthly revenue", cartService.getAllRevenues());
+    }
+
+    @Operation(summary = "Get product revenue", description = "API get all product revenue")
+    @GetMapping("/product-revenue")
+    public ResponseData<?> getProductRevenue() {
+        return new ResponseData<>(HttpStatus.OK.value(), "Request get product revenue", cartService.getAllProductRevenues());
     }
 }

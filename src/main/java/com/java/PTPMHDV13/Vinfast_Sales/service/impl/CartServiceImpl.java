@@ -1,7 +1,9 @@
 package com.java.PTPMHDV13.Vinfast_Sales.service.impl;
 
+import com.java.PTPMHDV13.Vinfast_Sales.dto.response.ProductRevenueDTO;
 import com.java.PTPMHDV13.Vinfast_Sales.dto.response.RevenueDTO;
 import com.java.PTPMHDV13.Vinfast_Sales.entity.Cart;
+import com.java.PTPMHDV13.Vinfast_Sales.entity.Product;
 import com.java.PTPMHDV13.Vinfast_Sales.repository.CartRepository;
 import com.java.PTPMHDV13.Vinfast_Sales.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -57,6 +59,23 @@ public class CartServiceImpl implements CartService {
         }
 
         return revenueDTOList;
+    }
+
+    @Override
+    public List<ProductRevenueDTO> getAllProductRevenues() {
+        List<Object[]> results = cartRepository.getProductRevenue();
+        List<ProductRevenueDTO> productRevenueDTOList = new ArrayList<>();
+        for (Object[] row : results) {
+            Integer productId = (Integer) row[0];
+            String productName = (String) row[1];
+            BigDecimal totalRevenue = (BigDecimal) row[2];
+            productRevenueDTOList.add(ProductRevenueDTO.builder()
+                            .productId(productId)
+                            .productName(productName)
+                            .totalRevenue(totalRevenue)
+                    .build());
+        }
+        return productRevenueDTOList;
     }
 
 }

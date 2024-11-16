@@ -1,13 +1,15 @@
 package com.java.PTPMHDV13.Vinfast_Sales.service;
 
+import com.java.PTPMHDV13.Vinfast_Sales.dto.response.ProductRevenueDTO;
 import com.java.PTPMHDV13.Vinfast_Sales.dto.response.RevenueDTO;
 import com.java.PTPMHDV13.Vinfast_Sales.entity.Cart;
 
 import java.util.List;
 
 public interface CartService {
-    public void addCart(Cart cart);
-    public void removeCart(Long id);
-    public List<Cart> getAllCarts();
-    public List<RevenueDTO> getAllRevenues();
+     void addCart(Cart cart);
+     void removeCart(Long id);
+     List<Cart> getAllCarts();
+     List<RevenueDTO> getAllRevenues();
+     List<ProductRevenueDTO> getAllProductRevenues();
 }
