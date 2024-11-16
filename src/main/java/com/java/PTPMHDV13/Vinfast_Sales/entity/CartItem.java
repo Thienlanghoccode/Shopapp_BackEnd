@@ -29,6 +29,4 @@ public class CartItem {
     @Column(nullable = false)
     private Integer quantity;
 
-    @Column(name = "unit_price", nullable = false)
-    private Double unitPrice;
 }
