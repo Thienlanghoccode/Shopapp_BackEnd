@@ -1,5 +1,6 @@
 package com.java.PTPMHDV13.Vinfast_Sales.controller;
 
+import com.java.PTPMHDV13.Vinfast_Sales.dto.request.ProductDTO;
 import com.java.PTPMHDV13.Vinfast_Sales.dto.response.ResponseData;
 import com.java.PTPMHDV13.Vinfast_Sales.entity.Product;
 import com.java.PTPMHDV13.Vinfast_Sales.service.ProductService;
@@ -36,7 +37,7 @@ public class ProductController {
 
     @Operation(summary = "Create new product", description = "API create new product")
     @PostMapping
-    public ResponseData<?> createProduct(@RequestBody Product product) {
+    public ResponseData<?> createProduct(@RequestBody ProductDTO product) {
         productService.addProduct(product);
         return new ResponseData<>(HttpStatus.CREATED.value(),"Product was added successfully", 1);
     }

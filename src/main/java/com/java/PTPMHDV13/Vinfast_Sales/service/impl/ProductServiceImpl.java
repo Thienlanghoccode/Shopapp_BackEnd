@@ -1,7 +1,10 @@
 package com.java.PTPMHDV13.Vinfast_Sales.service.impl;
 
+import com.java.PTPMHDV13.Vinfast_Sales.dto.request.ProductDTO;
+import com.java.PTPMHDV13.Vinfast_Sales.entity.Category;
 import com.java.PTPMHDV13.Vinfast_Sales.entity.Product;
-import com.java.PTPMHDV13.Vinfast_Sales.exception.AlReadyExistException;
+import com.java.PTPMHDV13.Vinfast_Sales.mapper.ProductMapper;
+import com.java.PTPMHDV13.Vinfast_Sales.repository.CategoryRepository;
 import com.java.PTPMHDV13.Vinfast_Sales.repository.ProductRepository;
 import com.java.PTPMHDV13.Vinfast_Sales.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,10 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
+    private final ProductMapper productMapper;
+
+    private final CategoryRepository categoryRepository;
+
     @Override
     public List<Product> getAllProducts() {
         return productRepository.findAll();
@@ -30,9 +37,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public void addProduct(Product product) {
-        if(productRepository.findById(Math.toIntExact(product.getId())).isPresent())
-            throw new AlReadyExistException("Product already exists");
+    public void addProduct(ProductDTO productDTO) {
+        Product product = productMapper.toProduct(productDTO);
+        Category category = categoryRepository.findById(productDTO.getCateID()).get();
+        product.setCategory(category);
         productRepository.save(product);
     }
 
