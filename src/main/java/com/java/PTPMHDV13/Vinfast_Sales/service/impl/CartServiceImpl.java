@@ -1,5 +1,6 @@
 package com.java.PTPMHDV13.Vinfast_Sales.service.impl;
 
+import com.java.PTPMHDV13.Vinfast_Sales.dto.response.RevenueDTO;
 import com.java.PTPMHDV13.Vinfast_Sales.entity.Cart;
 import com.java.PTPMHDV13.Vinfast_Sales.repository.CartRepository;
 import com.java.PTPMHDV13.Vinfast_Sales.service.CartService;
@@ -7,8 +8,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +40,23 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<Cart> getAllCarts() {
         return cartRepository.findAll();
+    }
+
+    @Override
+    public List<RevenueDTO> getAllRevenues() {
+        List<Object []> result = cartRepository.getMonthlyRevenueRaw();
+        List<RevenueDTO> revenueDTOList = new ArrayList<>();
+
+        for (Object[] row : result) {
+            String month = (String) row[0];
+            BigDecimal totalRevenue = (BigDecimal) row[1];
+            revenueDTOList.add(RevenueDTO.builder()
+                            .month(month)
+                            .totalRevenue(totalRevenue)
+                    .build());
+        }
+
+        return revenueDTOList;
     }
 
 }
