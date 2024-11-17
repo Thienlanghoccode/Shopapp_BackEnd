@@ -1,6 +1,6 @@
 package com.java.PTPMHDV13.Vinfast_Sales.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.java.PTPMHDV13.Vinfast_Sales.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class User implements UserDetails, Serializable {
     private UserStatus status;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonBackReference
     private List<Cart> carts;
 
     @Override

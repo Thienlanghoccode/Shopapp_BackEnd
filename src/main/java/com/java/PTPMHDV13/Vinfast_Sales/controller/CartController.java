@@ -1,12 +1,13 @@
 package com.java.PTPMHDV13.Vinfast_Sales.controller;
 
-import com.java.PTPMHDV13.Vinfast_Sales.dto.response.ResponseData;
+import com.java.PTPMHDV13.Vinfast_Sales.dto.response.ProductRevenueDTO;
+import com.java.PTPMHDV13.Vinfast_Sales.dto.response.RevenueDTO;
+import com.java.PTPMHDV13.Vinfast_Sales.dto.response.TopSellingProduct;
 import com.java.PTPMHDV13.Vinfast_Sales.entity.Cart;
 import com.java.PTPMHDV13.Vinfast_Sales.service.CartService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,19 +30,19 @@ public class CartController {
 
     @Operation(summary = "Get monthly revenue", description = "API get all monthly revenue")
     @GetMapping("/monthly-revenue")
-    public ResponseData<?> getMonthlyRevenue() {
-        return new ResponseData<>(HttpStatus.OK.value(), "Request get monthly revenue", cartService.getAllRevenues());
+    public List<RevenueDTO> getMonthlyRevenue() {
+        return  cartService.getAllRevenues();
     }
 
     @Operation(summary = "Get product revenue", description = "API get all product revenue")
     @GetMapping("/product-revenue")
-    public ResponseData<?> getProductRevenue() {
-        return new ResponseData<>(HttpStatus.OK.value(), "Request get product revenue", cartService.getAllProductRevenues());
+    public List<ProductRevenueDTO> getProductRevenue() {
+        return  cartService.getAllProductRevenues();
     }
 
     @Operation(summary = "Get selling product", description = "API get top 5 best-selling product")
     @GetMapping("/top-selling-product")
-    public ResponseData<?> getTop5BestSellingProduct() {
-        return new ResponseData<>(HttpStatus.OK.value(), "Request get top 5 best-selling product", cartService.getAllTopSellingProducts());
+    public List<TopSellingProduct> getTop5BestSellingProduct() {
+        return  cartService.getAllTopSellingProducts();
     }
 }
