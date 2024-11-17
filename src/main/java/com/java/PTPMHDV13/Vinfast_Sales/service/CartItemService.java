@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CartItemService {
     List<CartItem> getAllCartItems();
-
+    void deleteByID(Long id);
 }

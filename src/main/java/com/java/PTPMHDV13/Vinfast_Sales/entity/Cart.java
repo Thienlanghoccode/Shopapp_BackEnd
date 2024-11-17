@@ -23,7 +23,7 @@ public class Cart {
     @CreatedDate
     private Date buyDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonManagedReference
     private User user;
