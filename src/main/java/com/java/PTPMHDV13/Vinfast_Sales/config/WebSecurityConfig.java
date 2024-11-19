@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -16,6 +17,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
@@ -23,14 +25,15 @@ public class WebSecurityConfig {
 
     private final PreFilter preFilter;
 
-    private static final String[] SWAGGER_WHITELIST = {
+    private static final String[] WHITELIST = {
             "/v3/api-docs/**",
             "/swagger-ui.html",
             "/webjars/**",
             "/swagger-resources/configuration/ui",
             "/swagger-resources/configuration/security",
             "/swagger-ui.html/**",
-            "/swagger-ui/**"
+            "/swagger-ui/**",
+            "/auth/**"
     };
 
     @Bean
@@ -38,20 +41,15 @@ public class WebSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         http
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers(SWAGGER_WHITELIST).permitAll()
-                        .anyRequest().permitAll()
+                        .requestMatchers(WHITELIST).permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager
                         .sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider).addFilterBefore(preFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
-                        })
-                        .accessDeniedHandler((request, response, accessDeniedException) -> {
-                            response.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedException.getMessage());
-                        })
+                        .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage()))
+                        .accessDeniedHandler((request, response, accessDeniedException) -> response.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedException.getMessage()))
                 )
         ;
         return http.build();

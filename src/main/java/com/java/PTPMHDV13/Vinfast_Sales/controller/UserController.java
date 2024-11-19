@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class UserController {
 
     @Operation(summary = "Get all user", description = "API get all user")
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseData<List<User>> getAllUsers() {
         return new ResponseData<>(HttpStatus.OK.value(),"Request get all of users",
                 userService.findAll());
@@ -46,6 +48,7 @@ public class UserController {
 
     @Operation(summary = "Update user", description = "API update user by id")
     @PutMapping("/{userId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseData<?> updateUser(@PathVariable Long userId,@Valid @RequestBody UserRequestDTO request) {
         userService.updateUser(request, userId);
         return new ResponseData<>(HttpStatus.ACCEPTED.value(),
@@ -54,6 +57,7 @@ public class UserController {
 
     @Operation(summary = "Delete user", description = "API delete user by id")
     @DeleteMapping("/{userId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseData<?> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         return new ResponseData<>(HttpStatus.NO_CONTENT.value(), "User was deleted successfully");

@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,6 +39,7 @@ public class CategoryController {
 
     @Operation(summary = "Create new category", description = "API create new category")
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseData<?> addCategory(@Valid @RequestBody CategoryDTO category) {
         categoryService.saveCategory(category);
         return new ResponseData<>(HttpStatus.CREATED.value(),"Category added successfully",1);
@@ -45,6 +47,7 @@ public class CategoryController {
 
     @Operation(summary = "Update category", description = "API update category")
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseData<?> updateCategory(@PathVariable Long id ,@Valid @RequestBody CategoryDTO categoryDTO) {
         categoryService.updateCategory(id,categoryDTO);
         return new ResponseData<>(HttpStatus.OK.value(),"Category updated successfully",1);
@@ -52,6 +55,7 @@ public class CategoryController {
 
     @Operation(summary = "Delete category", description = "API delete category by id")
     @DeleteMapping("/{categoryId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseData<?> deleteCategory(@PathVariable Long categoryId) {
         categoryService.deleteCategoryById(categoryId);
         return new ResponseData<>(HttpStatus.NO_CONTENT.value(),"Category deleted successfully");

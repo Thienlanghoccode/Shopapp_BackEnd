@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class ProductController {
 
     @Operation(summary = "Create new product", description = "API create new product")
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseData<?> createProduct(@RequestBody ProductDTO product) {
         productService.addProduct(product);
         return new ResponseData<>(HttpStatus.CREATED.value(),"Product was added successfully", 1);
@@ -44,6 +46,7 @@ public class ProductController {
 
     @Operation(summary = "Update product", description = "API update product")
     @PutMapping("/{productId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseData<?> updateProduct(@PathVariable Integer productId, @RequestBody ProductDTO product) {
         productService.updateProduct(productId, product);
         return new ResponseData<>(HttpStatus.OK.value(),"Product was updated successfully", 1);
@@ -51,6 +54,7 @@ public class ProductController {
 
     @Operation(summary = "Delete product", description = "API delete product by id")
     @DeleteMapping("/{productId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseData<?> deleteProduct(@PathVariable Integer productId) {
         productService.deleteProduct(productId);
         return new ResponseData<>(HttpStatus.NO_CONTENT.value(),"Product was deleted successfully", 1);

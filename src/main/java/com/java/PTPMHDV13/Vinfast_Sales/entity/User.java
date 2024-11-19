@@ -6,9 +6,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -45,7 +47,9 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        List<SimpleGrantedAuthority> authoritiesList = new ArrayList<>();
+        authoritiesList.add(new SimpleGrantedAuthority("ROLE_" + (isAdmin ? "ADMIN" : "USER")));
+        return authoritiesList;
     }
 
     @Override
