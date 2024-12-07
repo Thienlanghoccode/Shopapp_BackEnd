@@ -2,6 +2,7 @@ package com.java.PTPMHDV13.Vinfast_Sales.controller;
 
 import com.java.PTPMHDV13.Vinfast_Sales.dto.request.UserRequestDTO;
 import com.java.PTPMHDV13.Vinfast_Sales.dto.response.ResponseData;
+import com.java.PTPMHDV13.Vinfast_Sales.dto.response.user.*;
 import com.java.PTPMHDV13.Vinfast_Sales.entity.User;
 import com.java.PTPMHDV13.Vinfast_Sales.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -61,5 +62,61 @@ public class UserController {
     public ResponseData<?> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         return new ResponseData<>(HttpStatus.NO_CONTENT.value(), "User was deleted successfully");
+    }
+
+    @Operation(summary = "Get customer revenue", description = "API to get revenue of each customer")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/user-analyst/customer-revenue")
+    public ResponseData<List<TotalSpentByUserDTO>> getCustomerRevenue() {
+        return new ResponseData<>(HttpStatus.OK.value(), "Fetched customer revenue",
+                userService.getCustomerRevenue());
+    }
+
+    @Operation(summary = "Get user activity by time", description = "API to get user activity by month and year")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/user-analyst/user-activity")
+    public ResponseData<List<ActiveUsersByMonthDTO>> getUserActivityByTime() {
+        return new ResponseData<>(HttpStatus.OK.value(), "Fetched user activity by time",
+                userService.getUserActivityByTime());
+    }
+
+    @Operation(summary = "Get product interactions", description = "API to get product interactions by users")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/user-analyst/product-interactions")
+    public ResponseData<List<CustomerInteractionDTO>> getProductInteractions() {
+        return new ResponseData<>(HttpStatus.OK.value(), "Fetched product interactions",
+                userService.getProductInteractions());
+    }
+
+    @Operation(summary = "Get top 3 spending customers", description = "API to get top 3 customers who spent the most")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/user-analyst/top-spenders")
+    public ResponseData<List<TopSpendingUsersDTO>> getTop3SpendingCustomers() {
+        return new ResponseData<>(HttpStatus.OK.value(), "Fetched top 3 spending customers",
+                userService.getTop3SpendingCustomers());
+    }
+
+    @Operation(summary = "Analyze order behavior", description = "API to analyze customer order behavior")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/user-analyst/order-behavior")
+    public ResponseData<List<OrderBehaviorAnalysisDTO>> getOrderBehaviorAnalysis() {
+        return new ResponseData<>(HttpStatus.OK.value(), "Fetched order behavior analysis",
+                userService.getOrderBehaviorAnalysis());
+    }
+
+    @Operation(summary = "Get less active customers", description = "API to get customers who haven't purchased in over 180 days")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/user-analyst/less-active-customers")
+    public ResponseData<List<UserOver180DaysDTO>> getInactiveCustomersOver180days() {
+        return new ResponseData<>(HttpStatus.OK.value(), "Fetched inactive customers over 180 days",
+                userService.getInactiveCustomersOver180days());
+    }
+
+    @Operation(summary = "Get RFM analysis", description = "API to get customer RFM analysis")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/user-analyst/rfm-analysis")
+    public ResponseData<List<CustomerRFMAnalysisDTO>> getRFMAnalysis() {
+        return new ResponseData<>(HttpStatus.OK.value(), "Fetched RFM analysis",
+                userService.getRFMAnalysis());
     }
 }

@@ -1,8 +1,8 @@
 package com.java.PTPMHDV13.Vinfast_Sales.service;
 
-import com.java.PTPMHDV13.Vinfast_Sales.dto.response.ProductRevenueDTO;
-import com.java.PTPMHDV13.Vinfast_Sales.dto.response.RevenueDTO;
-import com.java.PTPMHDV13.Vinfast_Sales.dto.response.TopSellingProduct;
+import com.java.PTPMHDV13.Vinfast_Sales.dto.response.product.ProductRevenueDTO;
+import com.java.PTPMHDV13.Vinfast_Sales.dto.response.product.RevenueDTO;
+import com.java.PTPMHDV13.Vinfast_Sales.dto.response.product.TopSellingProduct;
 import com.java.PTPMHDV13.Vinfast_Sales.entity.Cart;
 
 import java.util.List;

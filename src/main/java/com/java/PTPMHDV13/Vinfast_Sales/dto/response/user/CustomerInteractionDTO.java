@@ -1,4 +1,4 @@
-package com.java.PTPMHDV13.Vinfast_Sales.dto.response;
+package com.java.PTPMHDV13.Vinfast_Sales.dto.response.user;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -6,12 +6,12 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Builder
-@Getter
 @Setter
-public class TopSellingProduct {
-    private Integer productId;
+@Getter
+@Builder
+public class CustomerInteractionDTO {
     private String productName;
-    private Integer totalQuantity;
+    private int uniqueVisitors;
+    private int quantitySold;
     private BigDecimal totalRevenue;
 }
